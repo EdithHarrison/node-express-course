@@ -9,8 +9,10 @@ const getBody = (req, callback) => {
   });
   req.on("end", function () {
     body += decode.end();
-    const body1 = decodeURI(body);
-    const bodyArray = body1.split("&");
+    // Replace + characters with spaces
+    body = body.replace(/\+/g, ' ');
+    const decodedBody = decodeURIComponent(body);
+    const bodyArray = decodedBody.split("&");
     const resultHash = {};
     bodyArray.forEach((part) => {
       const partArray = part.split("=");
@@ -20,17 +22,46 @@ const getBody = (req, callback) => {
   });
 };
 
+
 // here, you could declare one or more variables to store what comes back from the form.
-let item = "Enter something below.";
+let item = "Pick a Song for Lyrics";
+
+const songs = {
+  "Itsy Bitsy Spider": "The itsy bitsy spider crawled up the water spout.\n\
+ Down came the rain, and washed the spider out.\n\
+ Out came the sun, and dried up all the rain,\n\
+ and the itsy bitsy spider went up the spout again.",
+  "Twinkle Twinkle Little Star": "Twinkle, twinkle, little star,\n\
+ How I wonder what you are.\n\
+ Up above the world so high,\n\
+ Like a diamond in the sky.",
+  "Old MacDonald Had a Farm": "Old MacDonald had a farm\n\
+ Ee i ee i o\n\
+ And on his farm he had some cows\n\
+ Ee i ee i oh\n\
+ With a moo-moo here\n\
+ And a moo-moo there\n\
+ Here a moo, there a moo\n\
+ Everywhere a moo-moo\n\
+ Old MacDonald had a farm\n\
+ Ee i ee i o"
+};
 
 // here, you can change the form below to modify the input fields and what is displayed.
 // This is just ordinary html with string interpolation.
 const form = () => {
+  let options = '';
+  for (const [title, lyrics] of Object.entries(songs)) {
+    options += `<option value="${lyrics}">${title}</option>`;
+  }
+
   return `
   <body>
   <p>${item}</p>
   <form method="POST">
-  <input name="item"></input>
+  <select name="item">
+    ${options}
+  </select>
   <button type="submit">Submit</button>
   </form>
   </body>
