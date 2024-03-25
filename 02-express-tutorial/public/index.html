@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express Assignment</title>
+    <style>
+        .navbar {
+            overflow: hidden;
+            background-color: #000000;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="http://localhost:3000/about">About</a>
+    <a href="http://localhost:3000/api/v1/products">Products</a>
+    <a href="http://localhost:3000/api/v1/test">Test</a>
+</div>
+
+<h2>Fetch Product by ID</h2>
+
+<form id="fetchProductForm" method="get">
+    <label for="productId">Enter Product ID:</label>
+    <input type="text" id="productId" name="productID" required>
+    <button type="submit">Fetch Product</button>
+</form>
+
+<script>
+    document.getElementById('fetchProductForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const productId = document.getElementById('productId').value;
+        const formAction = `/api/v1/products/${productId}`;
+        this.action = formAction;
+        this.submit();
+    });
+</script>
+
+<h2>Filter Products</h2>
+
+<form action="/api/v1/query" method="get">
+    <label for="searchQuery">Search Query:</label>
+    <input type="text" id="searchQuery" name="search">
+    <label for="limit">Limit:</label>
+    <input type="number" id="limit" name="limit" min="1" value="10">
+    <button type="submit">Filter Products</button>
+</form>
+</body>
+</html>

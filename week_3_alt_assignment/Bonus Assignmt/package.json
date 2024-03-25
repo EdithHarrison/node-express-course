@@ -1,0 +1,21 @@
+{
+  "name": "bonus-assignmt",
+  "version": "1.0.0",
+  "description": "\"Bonus assignment for Week 3\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "Edith Harrison",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.3",
+    "express-session": "^1.18.0",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
