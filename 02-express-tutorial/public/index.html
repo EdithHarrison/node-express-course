@@ -31,6 +31,7 @@
     <a href="http://localhost:3000/about">About</a>
     <a href="http://localhost:3000/api/v1/products">Products</a>
     <a href="http://localhost:3000/api/v1/test">Test</a>
+    <a href="http://localhost:3000/api/v1/people">People</a>
 </div>
 
 <h2>Fetch Product by ID</h2>
@@ -60,5 +61,102 @@
     <input type="number" id="limit" name="limit" min="1" value="10">
     <button type="submit">Filter Products</button>
 </form>
+
+ <!--Week4 basic front-end for testing-->
+
+<form action='/api/v1/people' method="POST">
+
+  <h2>Adding Name</h2>
+
+  <div class="form-row">
+    <label for="name"> Enter Name </label>
+    <input type="text" name="name" id="name" autocomplete="false" />
+  </div>
+  <button type="submit" class="block">submit</button>
+</form>
+
+<h2>Fetch Person by ID</h2>
+
+<form id="fetchPersonForm" method="get">
+    <label for="personId">Enter Person ID:</label>
+    <input type="text" id="personId" name="personID" required>
+    <button type="submit">Fetch Person</button>
+</form>
+
+<script>
+    document.getElementById('fetchPersonForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const personId = document.getElementById('personId').value;
+        const formAction = `/api/v1/people/${personId}`;
+        this.action = formAction;
+        this.submit();
+    });
+</script>
+
+<h2>Update Person</h2>
+
+<form id="updatePersonForm">
+    <label for="updatePersonId">Enter Person ID:</label>
+    <input type="text" id="updatePersonId" name="personID" required>
+    <label for="updatePersonName">New Name:</label>
+    <input type="text" id="updatePersonName" name="name" required>
+    <button type="submit" id="updateButton">Update Person</button>
+</form>   
+
+<script>
+    // Define the updatePerson function
+    function updatePerson() {
+        const personId = document.getElementById('updatePersonId').value;
+        const newName = document.getElementById('updatePersonName').value;
+
+        fetch(`/api/v1/people/${personId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: newName })
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Person updated successfully');
+            } else {
+                console.error('Failed to update person');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    // Add event listener to the form submit event
+    document.getElementById('updatePersonForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+        updatePerson();
+    });
+</script>
+
+
+<h2>Delete Person</h2>
+
+<form id="deletePersonForm" method="delete">
+    <label for="deletePersonId">Enter Person ID:</label>
+    <input type="text" id="deletePersonId" name="personID" required>
+    <button type="submit">Delete Person</button>
+</form>
+
+<script>
+    document.getElementById('deletePersonForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const personId = document.getElementById('deletePersonId').value;
+        fetch(`/api/v1/people/${personId}`, {
+            method: 'DELETE'
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+
+
 </body>
 </html>
