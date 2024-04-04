@@ -1,0 +1,14 @@
+1. I created asyncWrapper to help me handle async functions and errors in my routes. 
+It saves me time by not having to write the same code over and over again in my controllers.
+With asyncWrapper, it wraps the async functions and catches any errors that happen, 
+and sends them to the Express error-handling middleware.
+
+2. const getTask = asyncWrapper(async (req, res, next) => {
+    const { id: taskID } = req.params;
+    const task = await Task.findOne({ _id: taskID });
+    if (!task) {
+    const error = new CustomAPIError(`No task with id: ${taskID}`, 404);
+    return next(error);
+  }
+    res.status(200).json({ task });
+});
