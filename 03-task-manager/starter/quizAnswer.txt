@@ -1,0 +1,13 @@
+1. Middleware is used in an Express application to perform a function required on request and response. 
+Middleware functions can be added by using app.use() method, and are executed in order of the line. 
+Using middleware is useful in using modules to make your code easier to maintain.
+
+2. CRUD stands for Create, Read, Update, and Delete. 
+
+3. Yes
+    1. In order to access information from my .env file, I needed to have the dotenv package installed. 
+    Fortunately, the package was already installed when I did `npm install`, so I skipped that part. 
+    Then, I required the dotenv package in my app.js file and called the config method to load the variable `MONGO_URI` from the .env file into the app.js. 
+    From there, I accessed the `MONGO_URI` using `process.env` as a parameter in my `connectDB` async function. 
+    This allowed me to securely access the MongoDB database using the URI stored in the .env file.
+    2. I ensure that the contents of my .env file are protected by adding it to .gitignore file.
